@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.headercontain {
+	background-color: #333;
+	padding: 10px 0;
+	text-align: center;
+}
+
+.headercontain ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.headercontain li {
+	display: inline-block;
+	margin-right: 30px;
+}
+
+.headercontain a {
+	text-decoration: none;
+	color: white;
+}
+
+.headercontain a:hover {
+	background-color: #c0c0c0;
+	border-radius: 5px;
+}
