@@ -10,6 +10,10 @@ public class boardController {
 	@GetMapping("/")
 	private String main () {
 		
+		
+		
+		
+		
 		return"/main";
 	}
 	
