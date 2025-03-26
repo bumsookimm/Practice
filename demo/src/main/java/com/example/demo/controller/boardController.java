@@ -1,12 +1,19 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.example.demo.service.boardWriteService;
 
 @Controller
 public class boardController {
+
+	@Autowired
+	private boardWriteService boardWriteService;
 
 	@GetMapping("/board")
 	private String board() {
@@ -26,10 +33,19 @@ public class boardController {
 		return "/boardView";
 	}
 
-	@PostMapping("/boardWrite")
-	private String boardWrite() {
+	@GetMapping("/boardWriteView")
+	private String boardWriteView() {
 
-		return "/boardWrite";
+		return "/boardWriteView";
+	}
+
+	@PostMapping("/boardWrite")
+	private String boardWrite(@RequestParam("title") String board_title, @RequestParam("name") String board_name,
+			@RequestParam("content") String board_content) {
+
+		boardWriteService.boardSave(board_title, board_content, board_name);
+
+		return "redirect:/boardWriteView";
 	}
 
 	@PostMapping("/boardModifty")

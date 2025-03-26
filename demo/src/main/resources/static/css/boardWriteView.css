@@ -1,0 +1,59 @@
+@charset "UTF-8";
+
+.boardwritecontain {
+	width: 80%;
+	max-width: 800px;
+	margin: auto;
+	background-color: white;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	text-align: center;
+	margin: 100px auto;
+}
+
+.boardwritecontain h1 {
+	font-size: 28px;
+	margin-bottom: 50px;
+}
+
+.form-group label.require{
+	color:red;
+	font-size: 10px;
+	
+	
+}
+.form-group {
+	display: flex;
+	margin-top: 30px;
+	align-items: center;
+	margin-left: 10%;
+}
+
+.form-text{
+	display: flex;
+	flex-direction: column;
+	
+}
+
+.form-group label {
+	margin-right:10px;
+	color: black;
+	font-weight: bold;
+	
+}
+
+.form-group textarea {
+	width: 80%;
+}
+
+button {
+	margin-top: 50px;
+	width: 80px;
+	height: 50px;
+	background-color: #333;
+	color: white;
+	margin-left: auto;
+	margin-right: 10px;
+	display: block;
+}
