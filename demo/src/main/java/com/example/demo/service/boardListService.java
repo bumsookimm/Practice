@@ -6,18 +6,16 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.IDao;
 
 @Service
-public class boardWriteService {
+public class boardListService {
 	
 	@Autowired
 	private IDao iDao;
 	
-	public void boardSave(String title, String name, String contents) {
+	
+	public void boardList() {
 		
-	iDao.boardSave(name, title, contents);
-		
-		
+		iDao.boardList();
 		
 	}
-
-
+		
 }

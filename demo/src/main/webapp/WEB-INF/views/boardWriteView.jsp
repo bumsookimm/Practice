@@ -9,46 +9,72 @@
 </head>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/views/includes/sideBar.jsp"%>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="/static/js/boardWriteView.js"></script>
 
+
+<script >
+
+$(document).ready(function() {
+
+	var message = "${message}";
+	var messageType = "${messageType}";
+	console.log("Message: " + message); // message가 제대로 전달되는지 확인
+	console.log("Message Type: " + messageType);
+	if (message) {
+
+		if (messageType === "success") {
+			alert(message);
+			window.location.href ="/board";
+		} else if (messageType === "error") {
+			alert(message);
+
+		}
+
+	}
+
+
+});
+</script>
+
 <body>
 
-	<div class="boardwritecontain">
-		<h1>게시글 작성</h1>
+	<div class="container">
 
-		<form action="boardWrite" method="post">
-			<div class="form-group">
-				<div class = form-text>
-				<label class="require">*필수</label> 
-				<label for="title">제목</label> 
+		<h2>게시판 작성</h2>
+
+
+
+
+		<form action="boardWrite" method="post" class="boardform">
+			<div class="form">
+				<div class="textgroup">
+					<label class="require">필수</label> <label class="texts">제목</label>
 				</div>
 				<input type="text" id="title" name="title" required>
 			</div>
 
-			<div class=form-group>
-				<div class = form-text>
-				<label class="require">*필수</label> 
-				<label for="name">이름</label> 
+			<div class="form">
+				<div class="textgroup">
+					<label class="require">필수</label> <label class="texts">이름</label>
 				</div>
+
 				<input type="text" id="name" name="name" required>
-
 			</div>
 
-
-			<div class=form-group>
-				<div class = form-text>
-				<label class="require">*필수</label> 
-				<label for="content">내용</label>
+			<div class="form">
+				<div class="textgroup">
+					<label class="require">필수</label> <label class="texts" >내용</label>
 				</div>
-				<textarea id="content" name="content" rows="10" required></textarea>
-
-
+				<textarea id="contents" name="contents" rows="10" required></textarea>
 			</div>
 
-			<button type="submit">등록</button>
+			<button type="submit">작성</button>
+
 		</form>
+
+
 
 
 
