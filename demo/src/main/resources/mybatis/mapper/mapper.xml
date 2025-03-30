@@ -3,17 +3,21 @@
 <mapper namespace="com.example.demo.dao.IDao">
 
 	<insert id="boardSave">
-	INSERT INTO BOARD (BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED) VALUE
+	INSERT INTO BOARD (BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED) VALUES
 	(#{board_name}, #{board_title},#{board_content}, NOW())	
 	</insert>
 
-	<select id="boardList" resultType="com/example/demo/dto/boardDto.java">
+	<select id="boardList" resultType="BoardDto">
 	SELECT BOARD_NO,BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED
-	from BOARD
-	
+	FROM BOARD	
 	</select>
 
 
+	<select id="boardView" resultType="BoardDto">
+	SELECT BOARD_NO,BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED
+	from BOARD
+	WHERE #{board_no}
+	</select>
 
 </mapper>
 

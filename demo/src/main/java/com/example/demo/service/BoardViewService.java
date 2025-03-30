@@ -1,23 +1,24 @@
 package com.example.demo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.IDao;
+import com.example.demo.dto.BoardDto;
 
 @Service
-public class boardWriteService {
+public class BoardViewService {
 	
 	@Autowired
 	private IDao iDao;
 	
-	public void boardSave(String title, String name, String contents) {
+	
+	public List<BoardDto> boardList(int board_no) {
 		
-	iDao.boardSave(name, title, contents);
-		
-		
+		return iDao.boardView(board_no);
 		
 	}
-
-
+		
 }

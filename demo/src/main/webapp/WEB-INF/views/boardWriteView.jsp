@@ -47,7 +47,7 @@ $(document).ready(function() {
 
 
 
-		<form action="boardWrite" method="post" class="boardform">
+		<form action="boardWriteSave" method="post" class="boardform">
 			<div class="form">
 				<div class="textgroup">
 					<label class="require">필수</label> <label class="texts">제목</label>

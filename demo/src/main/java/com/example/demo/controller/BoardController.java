@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,16 +10,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.service.boardListService;
-import com.example.demo.service.boardWriteService;
+import com.example.demo.dto.BoardDto;
+import com.example.demo.service.BoardListService;
+import com.example.demo.service.BoardViewService;
+import com.example.demo.service.BoardWriteService;
 
 @Controller
-public class boardController {
+public class BoardController {
 
 	@Autowired
-	private boardWriteService boardWriteService;
-
-	private boardListService boardListService;
+	private BoardWriteService boardWriteService;
+	
+	@Autowired
+	private BoardListService boardListService;
+	
+	@Autowired
+	private BoardViewService boardViewService;
 	
 	@GetMapping("/board")
 	private String board() {
@@ -26,17 +34,22 @@ public class boardController {
 	}
 
 	@GetMapping("/boardList")
-	private String boardList() {
+	private String boardList(Model model) {
 
-		boardListService.boardList();
+		List<BoardDto> boardDto = boardListService.boardList();
 		
+		model.addAttribute("boardDto",boardDto);
 		
 		return "/boardList";
 	}
 
 	@GetMapping("/boardView")
-	private String boardView() {
+	private String boardView(@RequestParam("id") int board_no, Model model) {
 
+		System.out.println("board_no" + board_no);
+		List<BoardDto>boardDto = boardViewService.boardList(board_no);
+		model.addAttribute("boardDto", boardDto);
+		 
 		return "/boardView";
 	}
 
@@ -45,8 +58,10 @@ public class boardController {
 
 		return "/boardWriteView";
 	}
+	
+	
 
-	@PostMapping("/boardWrite")
+	@PostMapping("/boardWriteSave")
 	private String boardWrite(@RequestParam("title") String title,
 							@RequestParam("name") String name,
 							@RequestParam("contents") String contents,

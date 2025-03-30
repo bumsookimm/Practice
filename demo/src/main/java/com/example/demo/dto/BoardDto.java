@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class boardDto {
+public class BoardDto {
 
 	int board_no;
 	String board_name;
