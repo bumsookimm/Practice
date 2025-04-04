@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.dto.BoardDto;
+import com.example.demo.service.BoardDeleteService;
 import com.example.demo.service.BoardListService;
 import com.example.demo.service.BoardViewService;
 import com.example.demo.service.BoardWriteService;
@@ -26,6 +29,9 @@ public class BoardController {
 	
 	@Autowired
 	private BoardViewService boardViewService;
+	
+	@Autowired
+	private BoardDeleteService boardDeleteService;
 	
 	@GetMapping("/board")
 	private String board() {
@@ -46,8 +52,12 @@ public class BoardController {
 	@GetMapping("/boardView")
 	private String boardView(@RequestParam("id") int board_no, Model model) {
 
-		System.out.println("board_no" + board_no);
-		List<BoardDto>boardDto = boardViewService.boardList(board_no);
+		
+		BoardDto boardDto = boardViewService.boardView(board_no);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String formattedDate = sdf.format(boardDto.getBoard_created());
+	   
+		model.addAttribute("formattedDate",formattedDate);
 		model.addAttribute("boardDto", boardDto);
 		 
 		return "/boardView";
@@ -88,10 +98,13 @@ public class BoardController {
 		return "/boardModifty";
 	}
 
-	@DeleteMapping("/boardDelete")
-	private String boardDelete() {
+	@GetMapping("/boardDelete")
+	private String boardDelete(@RequestParam("id") int board_no) {
 
-		return "/boardDelete";
+		System.out.println("board_no" + board_no);
+		boardDeleteService.boardDelete(board_no);
+		
+		return "redirect:/boardList";
 	}
 
 }

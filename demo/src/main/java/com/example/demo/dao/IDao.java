@@ -13,5 +13,7 @@ public interface IDao {
 
 	public List<BoardDto> boardList();
 
-	public List<BoardDto> boardView(int board_no);
+	public BoardDto boardView(int board_no);
+
+	public void boardDelete (int board_no);
 }

@@ -15,9 +15,15 @@
 
 	<select id="boardView" resultType="BoardDto">
 	SELECT BOARD_NO,BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED
-	from BOARD
-	WHERE #{board_no}
+	FROM BOARD
+	WHERE BOARD_NO = #{board_no}
 	</select>
+
+
+	<delete id="boardDelete">
+	DELETE FROM BOARD 
+	WHERE BOARD_NO = #{board_no}	
+	</delete>
 
 </mapper>
 
