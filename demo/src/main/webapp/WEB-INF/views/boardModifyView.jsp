@@ -9,6 +9,24 @@
 </head>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/views/includes/sideBar.jsp"%>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function(){
+	
+	var message = "${message}"
+	var messageType = "${messageType}"
+	console.log("Message: " + message); 
+	console.log("Message Type: " + messageType);
+	if(messageType === "success"){
+		alert(message);
+		window.location.href = "/boardList";
+	}  else if (messageType === "error") {
+		window.location.href = "/boardList";
+		alert(message);
+	}
+});
+
+</script>
 
 
 
@@ -17,9 +35,7 @@
 	<div class="container">
 		<h2>작성글 수정하기</h2>
 
-		<div class="dateBox">
-			<p>날짜:${formattedDate}</p>
-		</div>
+
 		<hr>
 		
 	<form action="/boardModify?id=${boardDto.board_no}" method="post">

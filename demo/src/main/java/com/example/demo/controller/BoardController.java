@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,23 +55,10 @@ public class BoardController {
 	private String boardView(@RequestParam("id") int board_no, Model model) {
 
 		
-		BoardDto boardDto = boardViewService.boardView(board_no);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		System.out.println("getBoard_created" + boardDto.getBoard_created());
-		System.out.println("getUpdated_at()" + boardDto.getUpdated_at());
+		Map<String, Object> result = boardViewService.boardView(board_no);
 		
-		if(boardDto.getUpdated_at() != null ) { 
-		String formattedDate = sdf.format(boardDto.getUpdated_at());
-	   
-		model.addAttribute("formattedDate",formattedDate);
-		model.addAttribute("boardDto", boardDto);
-		} else {
-		
-		String formattedDate = sdf.format(boardDto.getBoard_created());	
-		
-		model.addAttribute("formattedDate",formattedDate);
-		model.addAttribute("boardDto", boardDto);	
-		}
+		model.addAttribute("boardDto", result.get("boardDto"));
+		model.addAttribute("formattedDate", result.get("formattedDate"));
 		
 		
 		return "/boardView";
@@ -92,43 +79,39 @@ public class BoardController {
 							Model model) {
 		
 		
-		try {
-			boardWriteService.boardSave(title, name, contents);
-			model.addAttribute("message","게시글 작성에 성공했습니다");
-			model.addAttribute("messageType","success");
-						
-		} catch (Exception e) {
-			model.addAttribute("message","게시글 작성에 실패했습니다");
-			model.addAttribute("messageType","error");
-		}
+		Map<String, Object> result = boardWriteService.boardSave(title, name, contents);
+		model.addAttribute("message", result.get("message"));
+		model.addAttribute("messageType", result.get("messageType"));
 		
 
-		return "/boardWriteView";
+		return "redirect:/boardList";
 	}
 
 	@PostMapping("/boardModify")
 	private String boardModify(@RequestParam("title") String title,
 								@RequestParam("name") String name,
 								@RequestParam("contents") String contents,
-								@RequestParam("id") int board_no) {
+								@RequestParam("id") int board_no,
+								Model model) {
 
-		boardModifyService.boardUpdate(board_no, title, name, contents);
+		Map<String, Object> result = boardModifyService.boardUpdate(board_no, title, name, contents);
+		model.addAttribute("message", result.get("message"));
+		model.addAttribute("messageType", result.get("messageType"));
 		
+		Map<String, Object> boardResult = boardViewService.boardView(board_no);
+	    model.addAttribute("boardDto", boardResult.get("boardDto"));
 		
-		return "redirect:/boardList";
+		return "/boardModifyView";
 	}
 
 	
 	@GetMapping("/boardModifyView")
 	private String boardModiftyView(@RequestParam("id") int board_no, Model model) {
 
-		
-		BoardDto boardDto = boardViewService.boardView(board_no);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		String formattedDate = sdf.format(boardDto.getBoard_created());
+		Map<String, Object> result = boardViewService.boardView(board_no);
 	   
-		model.addAttribute("formattedDate",formattedDate);
-		model.addAttribute("boardDto", boardDto);
+		
+		model.addAttribute("boardDto", result.get("boardDto"));
 		 
 		return "/boardModifyView";
 	}	

@@ -9,7 +9,7 @@ import com.example.demo.dto.BoardDto;
 @Mapper
 public interface IDao {
 
-	public void boardSave(String board_name, String board_title, String board_content);
+	public boolean boardSave(String board_name, String board_title, String board_content);
 
 	public List<BoardDto> boardList();
 
@@ -17,5 +17,5 @@ public interface IDao {
 
 	public void boardDelete (int board_no);
 
-	public void boardUpdate (int board_no, String board_title, String board_name, String board_content);
+	public boolean boardUpdate (int board_no, String board_title, String board_name, String board_content);
 }
