@@ -14,5 +14,6 @@ public class BoardDto {
 	String board_title;
 	String board_content;
 	Date board_created;
+	Date updated_at;
 
 }

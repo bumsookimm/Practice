@@ -52,7 +52,7 @@ function deleteBoard(boardNo){
 		</div>
 
 		<div class="buttonGroup">
-			<button>수정</button>
+			<button onclick="location.href='/boardModifyView?id=${boardDto.board_no}'" >수정</button>
 			<button onclick="deleteBoard(${boardDto.board_no})">삭제</button>
 		</div>
 	</div>
