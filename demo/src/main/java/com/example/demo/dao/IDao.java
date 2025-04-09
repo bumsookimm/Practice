@@ -16,4 +16,6 @@ public interface IDao {
 	public BoardDto boardView(int board_no);
 
 	public void boardDelete (int board_no);
+
+	public void boardUpdate (int board_no, String board_title, String board_name, String board_content);
 }
