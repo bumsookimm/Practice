@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+
+.container {
+    margin: auto;
+    width: 60%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    background-color: #fff;
+}
+
+
+.container h2 {
+    text-align: center;
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+
+.dateBox {
+    font-size: 12px;
+    color: gray;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #ddd;
+    margin: 10px 0;
+}
+
+
+.box {
+    text-align: left;
+    margin-top: 5px;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+
+.box p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5px;
+    font-size: 16px;
+}
+
+.box strong {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+
+textarea {
+    margin-top: 5px;
+    width: 97%;
+    height: 200px;
+    resize: none;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+    font-size: 14px;
+}
+
+
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+
+.buttonGroup button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #000000;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.buttonGroup button:hover {
+    background-color: #c0c0c0;
+}

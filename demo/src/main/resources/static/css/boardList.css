@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+.boardTable {
+    margin: auto;
+    width:60%;
+    border-collapse: collapse;
+    border: 2px solid black;
+	border-radius: 5px;
+	
+}
+
+.boardTable th, .boardTable td {
+    border: 1px solid black;
+    padding: 8px; 
+    text-align: center;
+}
+
+h2 {
+	
+	text-align: center;
+}
+

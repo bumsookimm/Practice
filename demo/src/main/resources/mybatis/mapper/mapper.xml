@@ -3,21 +3,44 @@
 <mapper namespace="com.example.demo.dao.IDao">
 
 	<insert id="boardSave">
-	INSERT INTO BOARD (BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED) VALUES
-	(#{board_name}, #{board_title},#{board_content}, NOW())	
+		INSERT INTO BOARD (BOARD_NAME, BOARD_TITLE,
+		BOARD_CONTENT, BOARD_CREATED)
+		VALUES
+		(#{board_name},
+		#{board_title},#{board_content}, NOW())
 	</insert>
 
 	<select id="boardList" resultType="BoardDto">
-	SELECT BOARD_NO,BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED
-	FROM BOARD	
+		SELECT BOARD_NO,BOARD_NAME,
+		BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED
+		FROM BOARD
 	</select>
 
 
 	<select id="boardView" resultType="BoardDto">
-	SELECT BOARD_NO,BOARD_NAME, BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED
-	from BOARD
-	WHERE #{board_no}
+		SELECT BOARD_NO,BOARD_NAME,
+		BOARD_TITLE, BOARD_CONTENT, BOARD_CREATED, UPDATED_AT
+		FROM BOARD
+		WHERE BOARD_NO =
+		#{board_no}
 	</select>
+
+
+	<delete id="boardDelete">
+		DELETE FROM BOARD
+		WHERE BOARD_NO = #{board_no}
+	</delete>
+
+
+	<update id="boardUpdate">
+		update board set
+		BOARD_NAME = #{board_name},
+		BOARD_TITLE = #{board_title},
+		BOARD_CONTENT = #{board_content},
+		UPDATED_AT = NOW()
+		WHERE BOARD_NO = #{board_no}
+
+	</update>
 
 </mapper>
 
