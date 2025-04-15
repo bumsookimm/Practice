@@ -42,6 +42,16 @@
 
 	</update>
 
+	<select id="boardListPaging" resultType="BoardDto">
+	SELECT * FROM BOARD
+	ORDER BY BOARD_NO DESC
+	LIMIT #{pageSize} OFFSET #{offset} 
+	</select>
+
+	<select id="boardTotalCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+
 </mapper>
 
 

@@ -35,7 +35,15 @@
 		
 		</table>
 
-
+	<div class="pagination">
+		<c:forEach begin="1" end="${totalPage}" var="p">
+			<a href="boardList?page=${p}"
+			class ="${p == currentPage ? 'active' : '' }">
+			[${p}]
+			</a>
+		</c:forEach>
+	
+	</div>
 
 
 </body>

@@ -42,11 +42,9 @@ public class BoardController {
 	}
 
 	@GetMapping("/boardList")
-	private String boardList(Model model) {
+	private String boardList(@RequestParam(defaultValue = "1") int page, Model model) {
 
-		List<BoardDto> boardDto = boardListService.boardList();
-		
-		model.addAttribute("boardDto",boardDto);
+		boardListService.boardList(page, model);
 		
 		return "/boardList";
 	}
