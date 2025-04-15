@@ -18,4 +18,8 @@ public interface IDao {
 	public void boardDelete (int board_no);
 
 	public boolean boardUpdate (int board_no, String board_title, String board_name, String board_content);
+
+	public int boardTotalCount();
+	
+	public List<BoardDto> boardListPaging (int pageSize, int offset);
 }
