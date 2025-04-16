@@ -9,10 +9,11 @@ import com.example.demo.dto.BoardDto;
 @Mapper
 public interface IDao {
 
-	public boolean boardSave(String board_name, String board_title, String board_content);
+	public int boardSave(String board_name, String board_title, String board_content);
 
-	public List<BoardDto> boardList();
-
+	public void boardSaveFile(int boardNo, String originalName, String saveName,
+			String filePath, long fileSize, String fileExtension);
+	
 	public BoardDto boardView(int board_no);
 
 	public void boardDelete (int board_no);
@@ -22,4 +23,5 @@ public interface IDao {
 	public int boardTotalCount();
 	
 	public List<BoardDto> boardListPaging (int pageSize, int offset);
+
 }

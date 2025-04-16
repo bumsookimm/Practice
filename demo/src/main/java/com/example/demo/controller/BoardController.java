@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.BoardDto;
 import com.example.demo.service.BoardDeleteService;
@@ -16,6 +17,8 @@ import com.example.demo.service.BoardListService;
 import com.example.demo.service.BoardModifyService;
 import com.example.demo.service.BoardViewService;
 import com.example.demo.service.BoardWriteService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class BoardController {
@@ -35,12 +38,8 @@ public class BoardController {
 	@Autowired
 	private BoardModifyService boardModifyService;
 	
-	@GetMapping("/board")
-	private String board() {
 
-		return "/board";
-	}
-
+	
 	@GetMapping("/boardList")
 	private String boardList(@RequestParam(defaultValue = "1") int page, Model model) {
 
@@ -74,13 +73,20 @@ public class BoardController {
 	private String boardWrite(@RequestParam("title") String title,
 							@RequestParam("name") String name,
 							@RequestParam("contents") String contents,
+							@RequestParam("files") MultipartFile [] files,
+							HttpServletRequest request,
 							Model model) {
 		
+		
+		System.out.println(title );
 		
 		Map<String, Object> result = boardWriteService.boardSave(title, name, contents);
 		model.addAttribute("message", result.get("message"));
 		model.addAttribute("messageType", result.get("messageType"));
 		
+		int board_no = (int) result.get("board_no");
+		
+		boardWriteService.boardSaveFile(files, request, board_no);
 
 		return "redirect:/boardList";
 	}
