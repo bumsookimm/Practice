@@ -78,7 +78,7 @@ public class BoardController {
 							Model model) {
 		
 		
-		System.out.println(title );
+		
 		
 		Map<String, Object> result = boardWriteService.boardSave(title, name, contents);
 		model.addAttribute("message", result.get("message"));
