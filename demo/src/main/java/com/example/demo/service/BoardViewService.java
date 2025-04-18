@@ -33,9 +33,9 @@ public class BoardViewService {
 			formattedDate = sdf.format(boardDto.getBoard_created());
 		
 		}
-		System.out.println("board_no" +board_no);
+		
 		List<BoardFileDto> boardFileDto = iDao.boardFileView(board_no);
-		System.out.println("boardFileDto"+ boardFileDto);
+	
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("boardDto", boardDto);

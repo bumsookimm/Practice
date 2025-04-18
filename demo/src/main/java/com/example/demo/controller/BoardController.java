@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +10,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.dto.BoardDto;
 import com.example.demo.service.BoardDeleteService;
+import com.example.demo.service.BoardFileDownloadService;
 import com.example.demo.service.BoardListService;
 import com.example.demo.service.BoardModifyService;
 import com.example.demo.service.BoardViewService;
 import com.example.demo.service.BoardWriteService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 public class BoardController {
@@ -38,6 +38,8 @@ public class BoardController {
 	@Autowired
 	private BoardModifyService boardModifyService;
 	
+	@Autowired
+	private BoardFileDownloadService boardFileDownloadService;
 
 	
 	@GetMapping("/boardList")
@@ -57,12 +59,23 @@ public class BoardController {
 		model.addAttribute("boardDto", result.get("boardDto"));
 		model.addAttribute("formattedDate", result.get("formattedDate"));
 		model.addAttribute("fileList", result.get("boardFileDto"));
-		
-		System.out.println(result.get("boardFileDto"));
-		
+	
 		return "/boardView";
 	}
 
+	@GetMapping("/boardFileDownload")
+	private void boardFileDownload (@RequestParam("fileName") String fileName,
+									@RequestParam("originName") String originName,
+									@RequestParam("filePath") String filePath,
+									HttpServletResponse response) throws Exception {
+		System.out.println(fileName + originName);
+		boardFileDownloadService.boardFileDownload(fileName, originName, filePath, response);
+		
+		
+	}
+	
+	
+	
 	@GetMapping("/boardWriteView")
 	private String boardWriteView() {
 
@@ -126,7 +139,6 @@ public class BoardController {
 	@GetMapping("/boardDelete")
 	private String boardDelete(@RequestParam("id") int board_no) {
 
-		System.out.println("board_no" + board_no);
 		boardDeleteService.boardDelete(board_no);
 		
 		return "redirect:/boardList";

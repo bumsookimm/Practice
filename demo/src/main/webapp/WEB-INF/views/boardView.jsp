@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -30,7 +31,7 @@ function deleteBoard(boardNo){
 			 <ul>
 			 <c:forEach var="file" items="${fileList}">
 			 	<li>
-					<a> 
+					<a href="boardFileDownload?fileName=${file.save_name}&originName=${file.original_name}&filePath=${file.file_path}"> 
 					${file.original_name}
 			 		</a>
 			 	</li>

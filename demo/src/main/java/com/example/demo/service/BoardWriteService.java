@@ -53,7 +53,7 @@ public class BoardWriteService {
 	
 	public void boardSaveFile (MultipartFile [] files, HttpServletRequest request, long board_no) {
 	
-		String uploadPath = request.getServletContext().getRealPath("/upload/");
+		String uploadPath = request.getServletContext().getRealPath("/upload/").replace("\\", "/");
 
 		
 		if(files != null && files.length > 0) {

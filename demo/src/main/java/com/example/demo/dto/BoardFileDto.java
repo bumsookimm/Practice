@@ -4,17 +4,19 @@ import java.util.Date;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
+@ToString
 @Getter
 @Setter
 public class BoardFileDto {
-	
-    private int fileNo;
-    private int boardNo;
-    private String originalName;
-    private String saveName;
-    private String filePath;
-    private long fileSize;
-    private String fileExtension;
-    private Date uploadedDate;
+
+	private int file_no;
+	private int board_no;
+	private String original_name;
+	private String save_name;
+	private String file_path;
+	private long file_size;
+	private String file_extension;
+	private Date uploaded_date;
 }
