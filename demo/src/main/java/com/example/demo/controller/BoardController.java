@@ -56,7 +56,9 @@ public class BoardController {
 		
 		model.addAttribute("boardDto", result.get("boardDto"));
 		model.addAttribute("formattedDate", result.get("formattedDate"));
+		model.addAttribute("fileList", result.get("boardFileDto"));
 		
+		System.out.println(result.get("boardFileDto"));
 		
 		return "/boardView";
 	}

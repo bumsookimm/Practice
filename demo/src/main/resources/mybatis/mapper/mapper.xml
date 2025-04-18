@@ -59,6 +59,10 @@
 
 
 
+	<select id="boardFileView" resultType="BoardFileDto">
+		SELECT * FROM BOARD_FILE WHERE BOARD_NO = #{board_no}	
+	</select>
+
 
 </mapper>
 

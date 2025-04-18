@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.BoardDto;
+import com.example.demo.dto.BoardFileDto;
 
 @Mapper
 public interface IDao {
@@ -25,4 +26,6 @@ public interface IDao {
 	
 	public List<BoardDto> boardListPaging (int pageSize, int offset);
 
+	public List<BoardFileDto> boardFileView (int board_no);
+	
 }
