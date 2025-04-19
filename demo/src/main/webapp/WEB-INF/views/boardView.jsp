@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -24,6 +25,21 @@ function deleteBoard(boardNo){
 
 	<div class="container">
 		<h2>작성글 상세보기</h2>
+		
+		<div class="fileBox">
+			<p>첨부파일</p>
+			 <ul>
+			 <c:forEach var="file" items="${fileList}">
+			 	<li>
+					<a href="boardFileDownload?fileName=${file.save_name}&originName=${file.original_name}&filePath=${file.file_path}"> 
+					${file.original_name}
+			 		</a>
+			 	</li>
+			 </c:forEach>
+			 </ul>
+		
+		</div>
+	
 
 		<div class="dateBox">
 			<p>날짜:${formattedDate}</p>

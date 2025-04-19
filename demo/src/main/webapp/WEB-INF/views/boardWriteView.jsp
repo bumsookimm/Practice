@@ -47,7 +47,10 @@ $(document).ready(function() {
 
 
 
-		<form action="boardWriteSave" method="post" class="boardform">
+		<form action="boardWriteSave" method="post" class="boardform" enctype="multipart/form-data">			
+			
+			<input type="file" name="files" multiple>
+			
 			<div class="form">
 				<div class="textgroup">
 					<label class="require">필수</label> <label class="texts">제목</label>
@@ -74,7 +77,7 @@ $(document).ready(function() {
 
 		</form>
 
-
+		
 
 
 

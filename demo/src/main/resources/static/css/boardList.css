@@ -20,3 +20,19 @@ h2 {
 	text-align: center;
 }
 
+.pagination{
+	margin-top: 10px;
+	text-align: center;
+}
+
+.pagination a{
+	text-decoration: none;
+	color: black;
+	
+}
+
+.pagination a.active{
+  font-weight: bold;
+  color: red;
+	
+}
