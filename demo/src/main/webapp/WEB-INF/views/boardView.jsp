@@ -26,7 +26,7 @@ function deleteBoard(boardNo){
 	<div class="container">
 		<h2>작성글 상세보기</h2>
 		
-		<div class="box">
+		<div class="fileBox">
 			<p>첨부파일</p>
 			 <ul>
 			 <c:forEach var="file" items="${fileList}">

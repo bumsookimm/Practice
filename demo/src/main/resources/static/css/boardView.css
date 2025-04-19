@@ -50,6 +50,16 @@ hr {
     background-color: #f9f9f9;
 }
 
+.fileBox{
+	text-align: right;
+	font-size: 10px;
+}
+
+.fileBox ul{
+	list-style-type: none;
+	
+}
+
 
 .box p {
     display: flex;

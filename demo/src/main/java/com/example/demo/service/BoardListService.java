@@ -21,14 +21,24 @@ public class BoardListService {
 		int offset = (page - 1) * pageSize;
 		
 		int totalCount = iDao.boardTotalCount();
-		int totalPage =(int)Math.ceil((double)totalCount / pageSize);
+		int totalPage =(int) Math.ceil((double) totalCount / pageSize);
+		
+		int pageBlock = 5;
+		
+		int startPage = ((page-1) / pageBlock) * pageBlock + 1;
+		int endPage = startPage + pageBlock -1;
+		if (endPage > totalPage) {
+			endPage = totalPage;
+		}
+		
 		
 		List<BoardDto> boardDto = iDao.boardListPaging(pageSize, offset);
 		
 		model.addAttribute("boardDto", boardDto);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPage", totalPage);
-		
+		model.addAttribute("startPage", startPage);
+		model.addAttribute("endPage", endPage);
 	
 		
 	}
