@@ -5,13 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>게시글 작성</title>
-<link rel="stylesheet" href="/static/css/boardWriteView.css">
+<link rel="stylesheet" href="/static/css/boardCss/boardWriteView.css">
 </head>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/views/includes/sideBar.jsp"%>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="/static/js/boardWriteView.js"></script>
+<script src="/static/js/boardJs/boardWriteView.js"></script>
 
 
 <script >

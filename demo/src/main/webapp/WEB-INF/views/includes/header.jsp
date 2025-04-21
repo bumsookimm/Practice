@@ -13,7 +13,7 @@
 			<li><a href="/"> 홈 </a> </li>
 			<li><a href="/boardList"> 게시판 </a> </li>
 			<li><a href="/calculator"> 계산기 </a> </li>
-			<li><a href="/scheduler"> 일정 </a> </li>	
+			<li><a href="/calendar"> 일정 </a> </li>	
 		</ul>
 	
 	
