@@ -47,7 +47,7 @@ public class BoardController {
 
 		boardListService.boardList(page, model);
 		
-		return "/boardList";
+		return "/boardJsp/boardList";
 	}
 
 	@GetMapping("/boardView")
@@ -60,7 +60,7 @@ public class BoardController {
 		model.addAttribute("formattedDate", result.get("formattedDate"));
 		model.addAttribute("fileList", result.get("boardFileDto"));
 	
-		return "/boardView";
+		return "/boardJsp/boardView";
 	}
 
 	@GetMapping("/boardFileDownload")
@@ -79,7 +79,7 @@ public class BoardController {
 	@GetMapping("/boardWriteView")
 	private String boardWriteView() {
 
-		return "/boardWriteView";
+		return "/boardJsp/boardWriteView";
 	}
 	
 	
@@ -103,7 +103,7 @@ public class BoardController {
 		
 		boardWriteService.boardSaveFile(files, request, board_no);
 
-		return "redirect:/boardList";
+		return "redirect:/boardJsp/boardList";
 	}
 
 	@PostMapping("/boardModify")
@@ -120,7 +120,7 @@ public class BoardController {
 		Map<String, Object> boardResult = boardViewService.boardView(board_no);
 	    model.addAttribute("boardDto", boardResult.get("boardDto"));
 		
-		return "/boardModifyView";
+		return "/boardJsp/boardModifyView";
 	}
 
 	
@@ -132,7 +132,7 @@ public class BoardController {
 		
 		model.addAttribute("boardDto", result.get("boardDto"));
 		 
-		return "/boardModifyView";
+		return "/boardJsp/boardModifyView";
 	}	
 	
 	
@@ -141,7 +141,7 @@ public class BoardController {
 
 		boardDeleteService.boardDelete(board_no);
 		
-		return "redirect:/boardList";
+		return "redirect:/boardJsp/boardList";
 	}
 
 }

@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+
+
+.calender-container{
+	width: 800px;
+	height:auto;
+	margin: auto;
+	margin-top: 50px;
+	border: 1px solid;
+	border-radius: 10px;
+	background: #fff;
+	padding: 20px;
+}
+
+.calendar-header{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+
+
+.calendar-days, .calendar-weekdays{
+	display: grid;
+	grid-template-columns: repeat(7,1fr);
+	gap:100px;
+	text-align: center;
+}
+
+.calendar-days {
+	margin-bottom: 30px;
+}
+
+.calendar-weekdays {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.today{
+	color: red;
+	
+}

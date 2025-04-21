@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/static/css/boardView.css">
+<link rel="stylesheet" href="/static/css/boardCss/boardView.css">
 </head>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/views/includes/sideBar.jsp"%>

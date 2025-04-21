@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 목록</title>
-<link rel="stylesheet" href="/static/css/boardList.css">
+<link rel="stylesheet" href="/static/css/boardCss/boardList.css">
 </head>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
 <%@ include file="/WEB-INF/views/includes/sideBar.jsp"%>
