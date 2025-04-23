@@ -63,20 +63,27 @@ document.getElementById("nextMonth").onclick = () => {
 saveTaskBtn.onclick = () => {
   const content = taskContent.value;
   if (content) {
-    fetch("/calendar/add", {
+    fetch("/calendar/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user_id: "user01",
-        schedule_date: `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${selectedDate}`,
+        schedule_date: `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+			.toString().padStart(2, '0')}-${selectedDate.toString().padStart(2, '0')}`,
         content: content
       })
-    }).then(() => {
-      renderCalendar(currentDate);
-      taskModal.style.display = 'none';  
-    });
-  }
-};
+	   })
+	      .then(res => res.text())  
+	      .then(data => {
+	   
+	        renderCalendar(currentDate); 
+	        taskModal.style.display = 'none'; 
+	      })
+	      .catch(error => {
+	        console.error("Error:", error);  
+	      });
+	    }
+	  };
 
 
 closeModalBtn.onclick = () => {
