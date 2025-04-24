@@ -1,5 +1,6 @@
 package com.example.demo.dao;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -7,10 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.BoardDto;
 import com.example.demo.dto.BoardFileDto;
+import com.example.demo.dto.SchedulerDto;
 
 @Mapper
 public interface IDao {
 
+	/*---------------------게시판---------------*/	
+	
 	public boolean boardSave(Map<String, Object> paramMap);
 	
 	public void boardSaveFile(long boardNo, String originalName, String saveName,
@@ -28,4 +32,11 @@ public interface IDao {
 
 	public List<BoardFileDto> boardFileView (int board_no);
 	
+	
+	/*---------------------일정표---------------*/	
+
+	public void schedulerSave(String user_id, Date schedule_date, String content);
+	
+	public List<SchedulerDto> schedulerList ();
+
 }
