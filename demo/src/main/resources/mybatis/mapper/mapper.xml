@@ -4,8 +4,10 @@
 
 	<!-- 게시판 -->
 
-	<insert id="boardSave" parameterType="map" useGeneratedKeys="true" keyProperty="board_no"  >
-		INSERT INTO BOARD (BOARD_NAME, BOARD_TITLE,
+	<insert id="boardSave" parameterType="map"
+		useGeneratedKeys="true" keyProperty="board_no">
+		INSERT INTO BOARD
+		(BOARD_NAME, BOARD_TITLE,
 		BOARD_CONTENT, BOARD_CREATED)
 		VALUES
 		(#{board_name},
@@ -15,10 +17,13 @@
 
 
 	<insert id="boardSaveFile">
-		INSERT INTO BOARD_FILE (BOARD_NO, ORIGINAL_NAME, SAVE_NAME,
+		INSERT INTO BOARD_FILE (BOARD_NO, ORIGINAL_NAME,
+		SAVE_NAME,
 		FILE_PATH, FILE_SIZE, FILE_EXTENSION)
-		VALUES (#{boardNo}, #{originalName}, #{saveName},
-		#{filePath}, #{fileSize}, #{fileExtension})
+		VALUES (#{boardNo},
+		#{originalName}, #{saveName},
+		#{filePath}, #{fileSize},
+		#{fileExtension})
 	</insert>
 
 
@@ -62,17 +67,21 @@
 
 
 	<select id="boardFileView" resultType="BoardFileDto">
-		SELECT * FROM BOARD_FILE WHERE BOARD_NO = #{board_no}	
+		SELECT * FROM BOARD_FILE
+		WHERE BOARD_NO = #{board_no}
 	</select>
 
-	
+
 	<!-- 일정표 -->
 
 	<insert id="schedulerSave">
-	INSERT INTO SCHEDULER(USER_ID, SCHEDULE_DATE, CONTENT) VALUES
-	(#{user_id},#{schedule_date},#{content})
-	
+		INSERT INTO SCHEDULER(USER_ID, SCHEDULE_DATE, CONTENT) VALUES
+		(#{user_id},#{schedule_date},#{content})
 	</insert>
+
+	<select id="schedulerList" resultType="SchedulerDto">
+		SELECT SCHEDULE_DATE, CONTENT FROM SCHEDULER
+	</select>
 
 
 </mapper>

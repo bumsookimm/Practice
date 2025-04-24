@@ -29,15 +29,30 @@
 }
 
 .calendar-days {
-	margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7열로 고정 */
+  gap: 10px;
+  margin-bottom: 30px;
+}
 
+.calendar-days div {
+  width: 100px; 
+  height: 100px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative; 
+  border: 1px solid;
+}
+
+.calendar-days div .task-list {
+  font-size: 8px; 
+  padding: 0;
+  margin: 0;
 }
 
 
-.calendar-days div{
-	cursor:pointer
-	
-}
 
 .calendar-days div:hover {
 	background-color: #ff0000;
@@ -106,3 +121,6 @@ saveTaskBtn:hover {
 #closeModalBtn:hover {
   background-color: #e41e10;
 }
+
+
+

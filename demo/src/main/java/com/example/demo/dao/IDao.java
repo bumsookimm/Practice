@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.dto.BoardDto;
 import com.example.demo.dto.BoardFileDto;
+import com.example.demo.dto.SchedulerDto;
 
 @Mapper
 public interface IDao {
@@ -35,4 +36,7 @@ public interface IDao {
 	/*---------------------일정표---------------*/	
 
 	public void schedulerSave(String user_id, Date schedule_date, String content);
+	
+	public List<SchedulerDto> schedulerList ();
+
 }
