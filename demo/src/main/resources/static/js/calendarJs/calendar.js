@@ -3,11 +3,24 @@ const currentMonthDisplay = document.getElementById("currentMonth");
 let currentDate = new Date();
 
 const taskModal = document.getElementById("taskModal");
-const taskContent = document.getElementById("taskContent");
-const saveTaskBtn = document.getElementById("saveTaskBtn");
+const taskList = document.getElementById("taskList");
+const addTaskBtn = document.getElementById("addTaskBtn");
 const closeModalBtn = document.getElementById("closeModalBtn");
 
-let selectedDate = null;  
+const addTaskModal = document.getElementById("addTaskModal");
+const newTaskContent = document.getElementById("newTaskContent");
+const saveNewTaskBtn = document.getElementById("saveNewTaskBtn");
+const closeAddModalBtn = document.getElementById("closeAddModalBtn");
+
+const editTaskModal = document.getElementById("editTaskModal");
+const editTaskContent = document.getElementById("editTaskContent");
+const saveEditTaskBtn = document.getElementById("saveEditTaskBtn");
+const closeEditModalBtn = document.getElementById("closeEditModalBtn");
+
+let selectedDate = null;
+let selectedDateStr = null;
+let scheduleMapGlobal = {}; // 전역에 저장
+let editingTaskId = null;   // 수정할 때 사용할 id 저장
 
 async function renderCalendar(date) {
   calendarDays.innerHTML = "";
@@ -30,10 +43,12 @@ async function renderCalendar(date) {
           .toString()
           .padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}`;
         if (!map[key]) map[key] = [];
-        map[key].push(item.content);
+        map[key].push({ id: item.schedule_id, content: item.content });
       });
       return map;
     });
+
+  scheduleMapGlobal = scheduleMap;
 
   for (let i = 0; i < firstDay; i++) {
     const empty = document.createElement("div");
@@ -41,8 +56,10 @@ async function renderCalendar(date) {
   }
 
   for (let day = 1; day <= lastDate; day++) {
-    const dayE1 = document.createElement("div");
-    dayE1.textContent = day;
+    const dayEl = document.createElement("div");
+
+    const dayText = document.createElement("p");
+    dayText.textContent = day;
 
     const today = new Date();
     if (
@@ -50,7 +67,7 @@ async function renderCalendar(date) {
       month === today.getMonth() &&
       day === today.getDate()
     ) {
-      dayE1.classList.add("today");
+      dayText.classList.add("today");
     }
 
     const key = `${year}-${(month + 1).toString().padStart(2, "0")}-${day
@@ -58,24 +75,72 @@ async function renderCalendar(date) {
       .padStart(2, "0")}`;
 
     if (scheduleMap[key]) {
-      const taskList = document.createElement("ul");
-      taskList.classList.add("task-list");
+      const taskListUl = document.createElement("ul");
+      taskListUl.classList.add("task-list");
 
-      scheduleMap[key].forEach((content) => {
+      scheduleMap[key].forEach((item) => {
         const li = document.createElement("li");
-        li.textContent = content;
-        taskList.appendChild(li);
+        li.textContent = item.content;
+        taskListUl.appendChild(li);
       });
 
-      dayE1.appendChild(taskList);
+      dayEl.appendChild(taskListUl);
     }
 
-    dayE1.onclick = () => {
+    dayEl.onclick = () => {
       selectedDate = day;
+      selectedDateStr = key;
+      taskList.innerHTML = "";
+
+      if (scheduleMap[key]) {
+		scheduleMap[key].forEach((item) => {
+		  const li = document.createElement("li");
+		  li.textContent = item.content;
+
+		  const buttonWrapper = document.createElement("div"); // 버튼들을 감쌀 div
+		  buttonWrapper.classList.add("button-wrapper"); // 클래스 추가
+
+		  const editBtn = document.createElement("button");
+		  editBtn.textContent = "수정";
+		  editBtn.onclick = () => {
+		    editingTaskId = item.id;
+		    editTaskContent.value = item.content;
+		    taskModal.style.display = "none";
+		    editTaskModal.style.display = "flex";
+		  };
+
+		  const deleteBtn = document.createElement("button");
+		  deleteBtn.textContent = "삭제";
+		  deleteBtn.onclick = () => {
+		    if (confirm("삭제하시겠습니까?")) {
+		      fetch("/calendar/delete", {
+		        method: "POST",
+		        headers: { "Content-Type": "application/json" },
+		        body: JSON.stringify({ schedule_id: item.id }),
+		      })
+		      .then(res => res.text())
+		      .then(data => {
+		        alert("삭제 완료!");
+		        renderCalendar(currentDate);
+		        taskModal.style.display = "none";
+		      });
+		    }
+		  };
+
+		  buttonWrapper.appendChild(editBtn);
+		  buttonWrapper.appendChild(deleteBtn);
+
+		  li.appendChild(buttonWrapper); // li에 buttonWrapper 추가
+		  taskList.appendChild(li);
+
+        });
+      }
+
       taskModal.style.display = "flex";
     };
 
-    calendarDays.appendChild(dayE1);
+    dayEl.appendChild(dayText);
+    calendarDays.appendChild(dayEl);
   }
 }
 
@@ -89,35 +154,76 @@ document.getElementById("nextMonth").onclick = () => {
   renderCalendar(currentDate);
 };
 
-saveTaskBtn.onclick = () => {
-  const content = taskContent.value;
-  if (content && selectedDate !== null) {  // selectedDate가 null이 아니어야만 처리
+addTaskBtn.onclick = () => {
+  taskModal.style.display = "none";
+  addTaskModal.style.display = "flex";
+};
+
+closeModalBtn.onclick = () => {
+  taskModal.style.display = "none";
+};
+
+closeAddModalBtn.onclick = () => {
+  addTaskModal.style.display = "none";
+  newTaskContent.value = "";
+};
+
+saveNewTaskBtn.onclick = () => {
+  const content = newTaskContent.value;
+  if (content && selectedDate !== null) {
     fetch("/calendar/save", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user_id: "user01",
         schedule_date: `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
-          .toString().padStart(2, '0')}-${selectedDate.toString().padStart(2, '0')}`,
-        content: content
-      })
+          .toString()
+          .padStart(2, "0")}-${selectedDate.toString().padStart(2, "0")}`,
+        content: content,
+      }),
     })
-      .then(res => res.text())  
-      .then(data => {
-        renderCalendar(currentDate); 
-        taskModal.style.display = 'none'; 
+      .then((res) => res.text())
+      .then((data) => {
+        renderCalendar(currentDate);
+        addTaskModal.style.display = "none";
+        newTaskContent.value = "";
       })
-      .catch(error => {
-        console.error("Error:", error);  
+      .catch((error) => {
+        console.error("Error:", error);
       });
   } else {
-    alert("날짜를 선택해 주세요.");
+    alert("할일 내용을 입력해 주세요.");
   }
 };
 
-closeModalBtn.onclick = () => {
-  taskModal.style.display = 'none';
-  taskContent.value = '';  // 텍스트 비우기
+
+saveEditTaskBtn.onclick = () => {
+  const newContent = editTaskContent.value.trim();
+  if (newContent && editingTaskId) {
+    fetch("/calendar/update", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        schedule_id: editingTaskId,
+        content: newContent,
+      }),
+    })
+    .then(res => res.text())
+    .then(data => {
+      alert("수정 완료!");
+      editTaskModal.style.display = "none";
+      editingTaskId = null;
+      renderCalendar(currentDate);
+    });
+  } else {
+    alert("내용을 입력하세요.");
+  }
+};
+
+
+closeEditModalBtn.onclick = () => {
+  editTaskModal.style.display = "none";
+  editingTaskId = null;
 };
 
 renderCalendar(currentDate);

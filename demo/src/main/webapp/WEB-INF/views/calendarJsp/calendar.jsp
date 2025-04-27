@@ -38,12 +38,35 @@
 	</div>
 
 	<div id="taskModal" class="modal">
-	  <div class="modal-content">
-	    <h3>할일을 입력하세요</h3>
-	    <textarea id="taskContent" placeholder="할일을 입력하세요"></textarea>
-	    <button id="saveTaskBtn">저장</button>
-	    <button id="closeModalBtn">취소</button>
-	  </div>
+		<div class="modal-content">
+			<h3>할일 목록</h3>
+			<ul id="taskList" class="taskList"></ul>
+			<div class="acBtn">
+				<button id="addTaskBtn">추가</button>
+				<button id="closeModalBtn">닫기</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="addTaskModal" class="modal">
+		<div class="modal-content">
+			<h3>새 할일 추가</h3>
+			<textarea id="newTaskContent" placeholder="새 할일을 입력하세요"></textarea>
+			<button id="saveNewTaskBtn">저장</button>
+			<button id="closeAddModalBtn">취소</button>
+		</div>
+	</div>
+
+
+	
+	<div id="editTaskModal" class="modal">
+		<div class="modal-content">
+			<h3>할일 수정</h3>
+			<textarea id="editTaskContent" placeholder="할일을 수정하세요"></textarea>
+			<button id="saveEditTaskBtn">수정 완료</button>
+			<button id="closeEditModalBtn">취소</button>
+		</div>
 	</div>
 
 
