@@ -23,207 +23,211 @@ let scheduleMapGlobal = {}; // 전역에 저장
 let editingTaskId = null;   // 수정할 때 사용할 id 저장
 
 async function renderCalendar(date) {
-  calendarDays.innerHTML = "";
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  currentMonthDisplay.textContent = `${year}년 ${month + 1}월`;
+	calendarDays.innerHTML = "";
+	const year = date.getFullYear();
+	const month = date.getMonth();
+	currentMonthDisplay.textContent = `${year}년 ${month + 1}월`;
 
-  const firstDay = new Date(year, month, 1).getDay();
-  const lastDate = new Date(year, month + 1, 0).getDate();
+	const firstDay = new Date(year, month, 1).getDay();
+	const lastDate = new Date(year, month + 1, 0).getDate();
 
-  const scheduleMap = await fetch("/calendar/list", {
-    method: "GET",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      const map = {};
-      data.forEach((item) => {
-        const d = new Date(item.schedule_date);
-        const key = `${d.getFullYear()}-${(d.getMonth() + 1)
-          .toString()
-          .padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}`;
-        if (!map[key]) map[key] = [];
-        map[key].push({ id: item.schedule_id, content: item.content });
-      });
-      return map;
-    });
+	const scheduleMap = await fetch("/calendar/list", {
+		method: "GET",
+	})
+		.then((res) => res.json())
+		.then((data) => {
+			const map = {};
+			data.forEach((item) => {
+				const d = new Date(item.schedule_date);
+				const key = `${d.getFullYear()}-${(d.getMonth() + 1)
+					.toString()
+					.padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}`;
+				if (!map[key]) map[key] = [];
+				map[key].push({ id: item.schedule_id, content: item.content });
+			});
+			return map;
+		});
 
-  scheduleMapGlobal = scheduleMap;
+	scheduleMapGlobal = scheduleMap;
 
-  for (let i = 0; i < firstDay; i++) {
-    const empty = document.createElement("div");
-    calendarDays.appendChild(empty);
-  }
+	for (let i = 0; i < firstDay; i++) {
+		const empty = document.createElement("div");
+		calendarDays.appendChild(empty);
+	}
 
-  for (let day = 1; day <= lastDate; day++) {
-    const dayEl = document.createElement("div");
+	for (let day = 1; day <= lastDate; day++) {
+		const dayEl = document.createElement("div");
 
-    const dayText = document.createElement("p");
-    dayText.textContent = day;
+		const dayText = document.createElement("p");
+		dayText.textContent = day;
 
-    const today = new Date();
-    if (
-      year === today.getFullYear() &&
-      month === today.getMonth() &&
-      day === today.getDate()
-    ) {
-      dayText.classList.add("today");
-    }
+		const today = new Date();
+		if (
+			year === today.getFullYear() &&
+			month === today.getMonth() &&
+			day === today.getDate()
+		) {
+			dayText.classList.add("today");
+		}
 
-    const key = `${year}-${(month + 1).toString().padStart(2, "0")}-${day
-      .toString()
-      .padStart(2, "0")}`;
+		const key = `${year}-${(month + 1).toString().padStart(2, "0")}-${day
+			.toString()
+			.padStart(2, "0")}`;
 
-    if (scheduleMap[key]) {
-      const taskListUl = document.createElement("ul");
-      taskListUl.classList.add("task-list");
+		if (scheduleMap[key]) {
+			const taskListUl = document.createElement("ul");
+			taskListUl.classList.add("task-list");
 
-      scheduleMap[key].forEach((item) => {
-        const li = document.createElement("li");
-        li.textContent = item.content;
-        taskListUl.appendChild(li);
-      });
+			scheduleMap[key].forEach((item) => {
+				const li = document.createElement("li");
+				li.textContent = item.content;
+				taskListUl.appendChild(li);
+			});
 
-      dayEl.appendChild(taskListUl);
-    }
+			dayEl.appendChild(taskListUl);
+		}
 
-    dayEl.onclick = () => {
-      selectedDate = day;
-      selectedDateStr = key;
-      taskList.innerHTML = "";
+		dayEl.onclick = () => {
+			selectedDate = day;
+			selectedDateStr = key;
+			taskList.innerHTML = "";
 
-      if (scheduleMap[key]) {
-		scheduleMap[key].forEach((item) => {
-		  const li = document.createElement("li");
-		  li.textContent = item.content;
+			if (scheduleMap[key]) {
+				scheduleMap[key].forEach((item) => {
+					const li = document.createElement("li");
+					li.textContent = item.content;
 
-		  const buttonWrapper = document.createElement("div"); // 버튼들을 감쌀 div
-		  buttonWrapper.classList.add("button-wrapper"); // 클래스 추가
+					const buttonWrapper = document.createElement("div"); // 버튼들을 감쌀 div
+					buttonWrapper.classList.add("button-wrapper"); // 클래스 추가
 
-		  const editBtn = document.createElement("button");
-		  editBtn.textContent = "수정";
-		  editBtn.onclick = () => {
-		    editingTaskId = item.id;
-		    editTaskContent.value = item.content;
-		    taskModal.style.display = "none";
-		    editTaskModal.style.display = "flex";
-		  };
+					const editBtn = document.createElement("button");
+					editBtn.textContent = "수정";
+					editBtn.onclick = () => {
+						editingTaskId = item.id;
+						editTaskContent.value = item.content;
+						taskModal.style.display = "none";
+						editTaskModal.style.display = "flex";
+						console.log(item);
 
-		  const deleteBtn = document.createElement("button");
-		  deleteBtn.textContent = "삭제";
-		  deleteBtn.onclick = () => {
-		    if (confirm("삭제하시겠습니까?")) {
-		      fetch("/calendar/delete", {
-		        method: "POST",
-		        headers: { "Content-Type": "application/json" },
-		        body: JSON.stringify({ schedule_id: item.id }),
-		      })
-		      .then(res => res.text())
-		      .then(data => {
-		        alert("삭제 완료!");
-		        renderCalendar(currentDate);
-		        taskModal.style.display = "none";
-		      });
-		    }
-		  };
 
-		  buttonWrapper.appendChild(editBtn);
-		  buttonWrapper.appendChild(deleteBtn);
+					};
 
-		  li.appendChild(buttonWrapper); // li에 buttonWrapper 추가
-		  taskList.appendChild(li);
+					const deleteBtn = document.createElement("button");
+					deleteBtn.textContent = "삭제";
+					deleteBtn.onclick = () => {
+						if (confirm("삭제하시겠습니까?")) {
+							fetch("/calendar/delete", {
+								method: "POST",
+								headers: { "Content-Type": "application/json" },
+								body: JSON.stringify({ schedule_id: item.id }),
+							})
+								.then(res => res.text())
+								.then(data => {
+									alert("삭제 완료!");
+									renderCalendar(currentDate);
+									taskModal.style.display = "none";
+								});
+						}
+					};
 
-        });
-      }
+					buttonWrapper.appendChild(editBtn);
+					buttonWrapper.appendChild(deleteBtn);
 
-      taskModal.style.display = "flex";
-    };
+					li.appendChild(buttonWrapper); // li에 buttonWrapper 추가
+					taskList.appendChild(li);
 
-    dayEl.appendChild(dayText);
-    calendarDays.appendChild(dayEl);
-  }
+				});
+			}
+
+			taskModal.style.display = "flex";
+		};
+
+		dayEl.appendChild(dayText);
+		calendarDays.appendChild(dayEl);
+	}
 }
 
 document.getElementById("prevMonth").onclick = () => {
-  currentDate.setMonth(currentDate.getMonth() - 1);
-  renderCalendar(currentDate);
+	currentDate.setMonth(currentDate.getMonth() - 1);
+	renderCalendar(currentDate);
 };
 
 document.getElementById("nextMonth").onclick = () => {
-  currentDate.setMonth(currentDate.getMonth() + 1);
-  renderCalendar(currentDate);
+	currentDate.setMonth(currentDate.getMonth() + 1);
+	renderCalendar(currentDate);
 };
 
 addTaskBtn.onclick = () => {
-  taskModal.style.display = "none";
-  addTaskModal.style.display = "flex";
+	taskModal.style.display = "none";
+	addTaskModal.style.display = "flex";
 };
 
 closeModalBtn.onclick = () => {
-  taskModal.style.display = "none";
+	taskModal.style.display = "none";
 };
 
 closeAddModalBtn.onclick = () => {
-  addTaskModal.style.display = "none";
-  newTaskContent.value = "";
+	addTaskModal.style.display = "none";
+	newTaskContent.value = "";
 };
 
 saveNewTaskBtn.onclick = () => {
-  const content = newTaskContent.value;
-  if (content && selectedDate !== null) {
-    fetch("/calendar/save", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: "user01",
-        schedule_date: `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
-          .toString()
-          .padStart(2, "0")}-${selectedDate.toString().padStart(2, "0")}`,
-        content: content,
-      }),
-    })
-      .then((res) => res.text())
-      .then((data) => {
-        renderCalendar(currentDate);
-        addTaskModal.style.display = "none";
-        newTaskContent.value = "";
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  } else {
-    alert("할일 내용을 입력해 주세요.");
-  }
+	const content = newTaskContent.value;
+	if (content && selectedDate !== null) {
+		fetch("/calendar/save", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				user_id: "user01",
+				schedule_date: `${currentDate.getFullYear()}-${(currentDate.getMonth() + 1)
+					.toString()
+					.padStart(2, "0")}-${selectedDate.toString().padStart(2, "0")}`,
+				content: content,
+			}),
+		})
+			.then((res) => res.text())
+			.then((data) => {
+				renderCalendar(currentDate);
+				addTaskModal.style.display = "none";
+				newTaskContent.value = "";
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
+	} else {
+		alert("할일 내용을 입력해 주세요.");
+	}
 };
 
 
 saveEditTaskBtn.onclick = () => {
-  const newContent = editTaskContent.value.trim();
-  if (newContent && editingTaskId) {
-    fetch("/calendar/update", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        schedule_id: editingTaskId,
-        content: newContent,
-      }),
-    })
-    .then(res => res.text())
-    .then(data => {
-      alert("수정 완료!");
-      editTaskModal.style.display = "none";
-      editingTaskId = null;
-      renderCalendar(currentDate);
-    });
-  } else {
-    alert("내용을 입력하세요.");
-  }
+	const newContent = editTaskContent.value.trim();
+	if (newContent && editingTaskId) {
+		fetch("/calendar/update", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				schedule_id: editingTaskId,
+				content: newContent,
+			}),
+		})
+			.then(res => res.json())
+			.then(data => {
+
+				alert(data.message);
+				editTaskModal.style.display = "none";
+				editingTaskId = null;
+				renderCalendar(currentDate);
+			});
+	} else {
+		alert("내용을 입력하세요.");
+	}
 };
 
 
 closeEditModalBtn.onclick = () => {
-  editTaskModal.style.display = "none";
-  editingTaskId = null;
+	editTaskModal.style.display = "none";
+	editingTaskId = null;
 };
 
 renderCalendar(currentDate);

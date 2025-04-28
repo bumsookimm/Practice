@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/static/css/calendarCss/calendar.css">
 </head>
 <%@ include file="/WEB-INF/views/includes/header.jsp"%>
-<%@ include file="/WEB-INF/views/includes/sideBar.jsp"%>
+<%@ include file="/WEB-INF/views/includes/calendarSideBar.jsp"%>
 
 
 <body>

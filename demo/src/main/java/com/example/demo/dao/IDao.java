@@ -39,4 +39,5 @@ public interface IDao {
 	
 	public List<SchedulerDto> schedulerList ();
 
+	public int schedulerUpdate(int schedule_id, String content);
 }
