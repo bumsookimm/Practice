@@ -35,9 +35,11 @@ public interface IDao {
 	
 	/*---------------------일정표---------------*/	
 
-	public void schedulerSave(String user_id, Date schedule_date, String content);
+	public int schedulerSave(String user_id, Date schedule_date, String content);
 	
 	public List<SchedulerDto> schedulerList ();
 
 	public int schedulerUpdate(int schedule_id, String content);
+
+	public int schedulerDelete(int schedule_id);
 }

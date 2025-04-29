@@ -152,7 +152,6 @@ saveTaskBtn:hover {
   justify-content: flex-end; 
   margin-top: 10px; 
   gap:5px;
-  
 }
 .button-wrapper {
   gap: 5px; /* 버튼 사이 간격 */
@@ -176,4 +175,12 @@ saveTaskBtn:hover {
   background-color: #000000;
   color: white;
 }
+
+.addTaskBtn , .closeModalBtn,.saveNewTaskBtn,.closeAddModalBtn {
+	background-color: black;
+	color: white;
+	border-radius: 5px;
+	border: none;
+}
+
 

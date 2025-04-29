@@ -82,18 +82,25 @@
 	</insert>
 
 	<select id="schedulerList" resultType="SchedulerDto">
-		SELECT SCHEDULE_ID,SCHEDULE_DATE,
+		SELECT
+		SCHEDULE_ID,SCHEDULE_DATE,
 		CONTENT FROM SCHEDULER
 	</select>
 
 	<update id="schedulerUpdate">
 		UPDATE SCHEDULER
 		SET CONTENT = #{content},
-			UPDATE_AT = NOW()
+		UPDATE_AT = NOW()
 		WHERE
 		SCHEDULE_ID = #{schedule_id}
 	</update>
 
+
+	<delete id="schedulerDelete">
+		DELETE FROM SCHEDULER
+		where SCHEDULE_ID =
+		#{schedule_id}
+	</delete>
 
 
 </mapper>

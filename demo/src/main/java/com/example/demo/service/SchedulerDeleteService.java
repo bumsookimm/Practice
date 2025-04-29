@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,26 +9,26 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dao.IDao;
 
 @Service
-public class SchedulerSaveService {
+public class SchedulerDeleteService {
 
 	@Autowired
 	private IDao iDao;
 
-	public Map<String, Object> scheduleSave(String user_id, Date schedule_date, String content) {
+	public Map<String, Object> SchedulerDelete(int scheduler_id) {
 
-		int isSave = iDao.schedulerSave(user_id, schedule_date, content);
+		int isDelete = iDao.schedulerDelete(scheduler_id);
 
 		Map<String, Object> result = new HashMap<>();
 
-		if (isSave > 0) {
-			result.put("message", "저장이 완료됐습니다");
+		if (isDelete > 0) {
+			result.put("message", "삭제가 완료됐습니다");
+
 		} else {
-			result.put("message", "저장이 실패됐습니다");
+			result.put("message", "삭제가 실패됐습니다");
 
 		}
 
 		return result;
 
 	}
-
 }

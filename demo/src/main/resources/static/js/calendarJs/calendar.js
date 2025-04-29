@@ -116,14 +116,14 @@ async function renderCalendar(date) {
 					deleteBtn.textContent = "삭제";
 					deleteBtn.onclick = () => {
 						if (confirm("삭제하시겠습니까?")) {
-							fetch("/calendar/delete", {
-								method: "POST",
+							fetch(`/calendar/delete/${item.id}`, {
+								method: "DELETE",
 								headers: { "Content-Type": "application/json" },
 								body: JSON.stringify({ schedule_id: item.id }),
 							})
-								.then(res => res.text())
+								.then(res => res.json())
 								.then(data => {
-									alert("삭제 완료!");
+									alert(data.message);
 									renderCalendar(currentDate);
 									taskModal.style.display = "none";
 								});
@@ -185,8 +185,9 @@ saveNewTaskBtn.onclick = () => {
 				content: content,
 			}),
 		})
-			.then((res) => res.text())
+			.then((res) => res.json())
 			.then((data) => {
+				alert(data.message);
 				renderCalendar(currentDate);
 				addTaskModal.style.display = "none";
 				newTaskContent.value = "";
@@ -204,7 +205,7 @@ saveEditTaskBtn.onclick = () => {
 	const newContent = editTaskContent.value.trim();
 	if (newContent && editingTaskId) {
 		fetch("/calendar/update", {
-			method: "POST",
+			method: "PUT",
 			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({
 				schedule_id: editingTaskId,
