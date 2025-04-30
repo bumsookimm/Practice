@@ -42,4 +42,6 @@ public interface IDao {
 	public int schedulerUpdate(int schedule_id, String content);
 
 	public int schedulerDelete(int schedule_id);
+
+	public int schedulerIsDone(int schedule_id);
 }

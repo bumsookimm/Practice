@@ -38,12 +38,14 @@ async function renderCalendar(date) {
 		.then((data) => {
 			const map = {};
 			data.forEach((item) => {
+				
 				const d = new Date(item.schedule_date);
 				const key = `${d.getFullYear()}-${(d.getMonth() + 1)
 					.toString()
 					.padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}`;
 				if (!map[key]) map[key] = [];
-				map[key].push({ id: item.schedule_id, content: item.content });
+				map[key].push({ id: item.schedule_id, content: item.content, isdone: item.isdone});
+				
 			});
 			return map;
 		});
@@ -96,9 +98,34 @@ async function renderCalendar(date) {
 				scheduleMap[key].forEach((item) => {
 					const li = document.createElement("li");
 					li.textContent = item.content;
+					li.classList.add(item.isdone === 1 ? "complete" : "incomplete");
 
-					const buttonWrapper = document.createElement("div"); // 버튼들을 감쌀 div
-					buttonWrapper.classList.add("button-wrapper"); // 클래스 추가
+					const buttonWrapper = document.createElement("div");
+					buttonWrapper.classList.add("button-wrapper");
+
+
+					const statusBtn = document.createElement("button");
+					statusBtn.classList.add("status-btn");
+					statusBtn.textContent = item.isdone === 1 ? "완료됨" : "미완료";
+					statusBtn.onclick = () => {
+				
+
+						fetch(`/calendar/isdone`, {
+							method: "PUT",
+							headers: { "Content-Type": "application/json" },
+							body: JSON.stringify({
+								schedule_id: item.id,
+								isdone: item.isdone,
+							}),
+						})
+							.then((res) => res.json())
+							.then((data) => {
+							
+								console.log("data", data);
+								alert(data.message);
+								renderCalendar(currentDate);
+							});
+					};
 
 					const editBtn = document.createElement("button");
 					editBtn.textContent = "수정";
@@ -107,9 +134,6 @@ async function renderCalendar(date) {
 						editTaskContent.value = item.content;
 						taskModal.style.display = "none";
 						editTaskModal.style.display = "flex";
-						console.log(item);
-
-
 					};
 
 					const deleteBtn = document.createElement("button");
@@ -121,8 +145,8 @@ async function renderCalendar(date) {
 								headers: { "Content-Type": "application/json" },
 								body: JSON.stringify({ schedule_id: item.id }),
 							})
-								.then(res => res.json())
-								.then(data => {
+								.then((res) => res.json())
+								.then((data) => {
 									alert(data.message);
 									renderCalendar(currentDate);
 									taskModal.style.display = "none";
@@ -130,12 +154,12 @@ async function renderCalendar(date) {
 						}
 					};
 
+					buttonWrapper.appendChild(statusBtn);
 					buttonWrapper.appendChild(editBtn);
 					buttonWrapper.appendChild(deleteBtn);
 
-					li.appendChild(buttonWrapper); // li에 buttonWrapper 추가
+					li.appendChild(buttonWrapper);
 					taskList.appendChild(li);
-
 				});
 			}
 

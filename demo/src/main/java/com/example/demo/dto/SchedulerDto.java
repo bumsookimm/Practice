@@ -15,5 +15,6 @@ public class SchedulerDto {
 	private String content;
 	private Date created_at;
 	private Date update_at;
+	private int isdone;
 
 }

@@ -1,11 +1,9 @@
 package com.example.demo.controller;
 
-import java.security.PrivateKey;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.dto.SchedulerDto;
 import com.example.demo.service.SchedulerDeleteService;
+import com.example.demo.service.SchedulerIsDoneService;
 import com.example.demo.service.SchedulerListService;
 import com.example.demo.service.SchedulerSaveService;
 import com.example.demo.service.SchedulerUpdateService;
@@ -37,6 +36,10 @@ public class CalendarController {
 	@Autowired
 	private SchedulerDeleteService schedulerDeleteService;
 
+	@Autowired
+	private SchedulerIsDoneService schedulerIsDoneService;
+	
+	
 	@GetMapping("/calendar")
 	private String calenderMain() {
 
@@ -81,4 +84,17 @@ public class CalendarController {
 		return ResponseEntity.ok(result);
 	}
 
+	
+	@PutMapping("/calendar/isdone")
+	private ResponseEntity<Map<String, Object>> calenderIsDone(@RequestBody SchedulerDto schedulerDto){
+		int schedule_id = schedulerDto.getSchedule_id();
+		int isdone = schedulerDto.getIsdone();
+		schedulerDto.setIsdone(isdone);
+		System.out.println("con_isdone: "+ isdone);
+		
+		Map<String, Object> result = schedulerIsDoneService.calenderisDone(schedule_id );
+		
+		return ResponseEntity.ok(result);
+	}
+	
 }

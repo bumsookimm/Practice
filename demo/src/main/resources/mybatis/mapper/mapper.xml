@@ -84,13 +84,14 @@
 	<select id="schedulerList" resultType="SchedulerDto">
 		SELECT
 		SCHEDULE_ID,SCHEDULE_DATE,
-		CONTENT FROM SCHEDULER
+		CONTENT,ISDONE FROM SCHEDULER
 	</select>
 
 	<update id="schedulerUpdate">
 		UPDATE SCHEDULER
 		SET CONTENT = #{content},
-		UPDATE_AT = NOW()
+		UPDATE_AT =
+		NOW()
 		WHERE
 		SCHEDULE_ID = #{schedule_id}
 	</update>
@@ -101,6 +102,17 @@
 		where SCHEDULE_ID =
 		#{schedule_id}
 	</delete>
+
+	<update id="schedulerIsDone">
+		UPDATE SCHEDULER
+		SET ISDONE  = 
+		(CASE WHEN ISDONE = 0 THEN 1
+			  WHEN ISDONE = 1 THEN 0
+			  END)
+		WHERE SCHEDULE_ID =
+		#{schedule_id}
+
+	</update>
 
 
 </mapper>
