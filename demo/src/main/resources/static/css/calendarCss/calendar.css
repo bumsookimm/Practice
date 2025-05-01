@@ -183,4 +183,20 @@ saveTaskBtn:hover {
 	border: none;
 }
 
+li.complete {
+	color: green;
+}
 
+li.incomplete {
+	color: red;
+}
+
+.status-btn.complete {
+	background-color: green;
+	color: white;
+}
+
+.status-btn.incomplete {
+	background-color: red;
+	color: white;
+}

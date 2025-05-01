@@ -38,14 +38,14 @@ async function renderCalendar(date) {
 		.then((data) => {
 			const map = {};
 			data.forEach((item) => {
-				
+
 				const d = new Date(item.schedule_date);
 				const key = `${d.getFullYear()}-${(d.getMonth() + 1)
 					.toString()
 					.padStart(2, "0")}-${d.getDate().toString().padStart(2, "0")}`;
 				if (!map[key]) map[key] = [];
-				map[key].push({ id: item.schedule_id, content: item.content, isdone: item.isdone});
-				
+				map[key].push({ id: item.schedule_id, content: item.content, isdone: item.isdone });
+
 			});
 			return map;
 		});
@@ -83,6 +83,7 @@ async function renderCalendar(date) {
 			scheduleMap[key].forEach((item) => {
 				const li = document.createElement("li");
 				li.textContent = item.content;
+				li.classList.add(item.isdone === 1 ? "complete" : "incomplete");
 				taskListUl.appendChild(li);
 			});
 
@@ -107,23 +108,33 @@ async function renderCalendar(date) {
 					const statusBtn = document.createElement("button");
 					statusBtn.classList.add("status-btn");
 					statusBtn.textContent = item.isdone === 1 ? "완료됨" : "미완료";
+					statusBtn.classList.add(item.isdone === 1 ? "complete" : "incomplete");
 					statusBtn.onclick = () => {
-				
+						const newIsDone = item.isdone === 1 ? 0 : 1;
 
 						fetch(`/calendar/isdone`, {
 							method: "PUT",
 							headers: { "Content-Type": "application/json" },
 							body: JSON.stringify({
 								schedule_id: item.id,
-								isdone: item.isdone,
+								isdone: newIsDone,
 							}),
 						})
 							.then((res) => res.json())
 							.then((data) => {
-							
-								console.log("data", data);
 								alert(data.message);
-								renderCalendar(currentDate);
+
+								// 상태 및 클래스 업데이트
+								item.isdone = newIsDone;
+
+								// li 요소 클래스 업데이트
+								li.classList.remove("complete", "incomplete");
+								li.classList.add(newIsDone === 1 ? "complete" : "incomplete");
+
+								// 버튼 텍스트 및 클래스도 즉시 변경
+								statusBtn.textContent = newIsDone === 1 ? "완료됨" : "미완료";
+								statusBtn.classList.remove("complete", "incomplete");
+								statusBtn.classList.add(newIsDone === 1 ? "complete" : "incomplete");
 							});
 					};
 

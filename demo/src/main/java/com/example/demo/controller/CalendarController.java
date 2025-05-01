@@ -89,10 +89,9 @@ public class CalendarController {
 	private ResponseEntity<Map<String, Object>> calenderIsDone(@RequestBody SchedulerDto schedulerDto){
 		int schedule_id = schedulerDto.getSchedule_id();
 		int isdone = schedulerDto.getIsdone();
-		schedulerDto.setIsdone(isdone);
-		System.out.println("con_isdone: "+ isdone);
+
 		
-		Map<String, Object> result = schedulerIsDoneService.calenderisDone(schedule_id );
+		Map<String, Object> result = schedulerIsDoneService.calenderisDone(schedule_id, isdone );
 		
 		return ResponseEntity.ok(result);
 	}
