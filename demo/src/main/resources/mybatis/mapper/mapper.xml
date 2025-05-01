@@ -7,7 +7,8 @@
 	<insert id="boardSave" parameterType="map"
 		useGeneratedKeys="true" keyProperty="board_no">
 		INSERT INTO BOARD
-		(BOARD_NAME, BOARD_TITLE,
+		(BOARD_NAME,
+		BOARD_TITLE,
 		BOARD_CONTENT, BOARD_CREATED)
 		VALUES
 		(#{board_name},
@@ -75,13 +76,43 @@
 	<!-- 일정표 -->
 
 	<insert id="schedulerSave">
-		INSERT INTO SCHEDULER(USER_ID, SCHEDULE_DATE, CONTENT) VALUES
+		INSERT INTO SCHEDULER(USER_ID, SCHEDULE_DATE,
+		CONTENT) VALUES
 		(#{user_id},#{schedule_date},#{content})
 	</insert>
 
 	<select id="schedulerList" resultType="SchedulerDto">
-		SELECT SCHEDULE_DATE, CONTENT FROM SCHEDULER
+		SELECT
+		SCHEDULE_ID,SCHEDULE_DATE,
+		CONTENT,ISDONE FROM SCHEDULER
 	</select>
+
+	<update id="schedulerUpdate">
+		UPDATE SCHEDULER
+		SET CONTENT = #{content},
+		UPDATE_AT =
+		NOW()
+		WHERE
+		SCHEDULE_ID = #{schedule_id}
+	</update>
+
+
+	<delete id="schedulerDelete">
+		DELETE FROM SCHEDULER
+		where SCHEDULE_ID =
+		#{schedule_id}
+	</delete>
+
+	<update id="schedulerIsDone">
+		UPDATE SCHEDULER
+		SET ISDONE  = 
+		(CASE WHEN ISDONE = 0 THEN 1
+			  WHEN ISDONE = 1 THEN 0
+			  END)
+		WHERE SCHEDULE_ID =
+		#{schedule_id}
+
+	</update>
 
 
 </mapper>
