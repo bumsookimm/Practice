@@ -14,6 +14,11 @@
 			<li><a href="/boardList"> 게시판 </a> </li>
 			<li><a href="/calculator"> 계산기 </a> </li>
 			<li><a href="/calendar"> 일정 </a> </li>	
+			
+
+			<li><a href="/signUp" class="right-align"> 회원가입 </a> </li>	
+			<li><a href="/logIn" class="right-align"> 로그인 </a> </li>	
+			
 		</ul>
 	
 	
