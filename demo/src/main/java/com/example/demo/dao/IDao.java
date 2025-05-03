@@ -44,4 +44,11 @@ public interface IDao {
 	public int schedulerDelete(int schedule_id);
 
 	public int schedulerIsDone(int schedule_id);
+	
+	
+	/*---------------------회원가입---------------*/	
+	
+	public void signUp(String user_name, String user_password);
+	
+	
 }

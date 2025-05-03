@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+.signUpFormContainer {   
+  align-items: center;        
+  justify-content: center;    
+  height: 500px;              
+  text-align: center;        
+}
+
