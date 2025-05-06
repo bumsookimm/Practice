@@ -135,6 +135,8 @@ async function renderCalendar(date) {
 								statusBtn.textContent = newIsDone === 1 ? "완료됨" : "미완료";
 								statusBtn.classList.remove("complete", "incomplete");
 								statusBtn.classList.add(newIsDone === 1 ? "complete" : "incomplete");
+							
+								renderCalendar(currentDate);
 							});
 					};
 

@@ -105,15 +105,21 @@
 
 	<update id="schedulerIsDone">
 		UPDATE SCHEDULER
-		SET ISDONE  = 
+		SET ISDONE =
 		(CASE WHEN ISDONE = 0 THEN 1
-			  WHEN ISDONE = 1 THEN 0
-			  END)
+		WHEN ISDONE = 1 THEN 0
+		END)
 		WHERE SCHEDULE_ID =
 		#{schedule_id}
 
 	</update>
 
+
+
+	<insert id="signUp">
+		INSERT USERS(USER_NAME, USER_PASSWORD, USER_CREATED, USER_GENDER ,USER_EMAIL, USER_AGE)
+		VALUES (#{user_name}, #{user_password}, NOW(), #{user_gender}, #{user_email}, #{user_age})
+	</insert>
 
 </mapper>
 
