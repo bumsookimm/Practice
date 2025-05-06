@@ -117,8 +117,8 @@
 
 
 	<insert id="signUp">
-		INSERT USERS(USER_NAME, USER_PASSWORD, USER_CREATED)
-		VALUES (#{user_name}, #{user_password}, NOW())
+		INSERT USERS(USER_NAME, USER_PASSWORD, USER_CREATED, USER_GENDER ,USER_EMAIL, USER_AGE)
+		VALUES (#{user_name}, #{user_password}, NOW(), #{user_gender}, #{user_email}, #{user_age})
 	</insert>
 
 </mapper>

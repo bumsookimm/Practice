@@ -48,7 +48,7 @@ public interface IDao {
 	
 	/*---------------------회원가입---------------*/	
 	
-	public void signUp(String user_name, String user_password);
+	public void signUp(String user_name, String user_password, String user_gender ,String user_email, int user_age);
 	
 	
 }

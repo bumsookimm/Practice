@@ -1,9 +1,76 @@
 @charset "UTF-8";
 
-.signUpFormContainer {   
-  align-items: center;        
-  justify-content: center;    
-  height: 500px;              
-  text-align: center;        
+.signUpFormContainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 500px;
+	text-align: center;
 }
 
+h2 {
+	margin-bottom: 40px;
+	font-size: 28px;
+	text-align: center;
+}
+
+.form-group {
+	display: flex;
+	align-items: center;
+	margin-bottom: 35px;
+}
+
+.form-group label {
+	width: 80px;
+	margin-right: 10px;
+	font-weight: bold;
+	text-align: left;
+}
+
+.form-group input[type="text"], .form-group input[type="password"] {
+	flex: 1;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.gender-options {
+	display: flex;
+	gap: 20px;
+	padding-top: 5px;
+}
+
+.gender-options label {
+	font-weight: normal;
+}
+
+.submit-btn {
+	width: 100%;
+	padding: 12px;
+	background-color: black;
+	color: white;
+	border: none;
+	border-radius: 6px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.submit-btn:hover {
+	background-color: #808080;
+}
+
+.input-wrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+.error-message {
+  color: red;
+  font-size: 0.3em;    
+  margin-top: 4px;
+  margin-left: 2px;
+  font-weight: normal;
+}

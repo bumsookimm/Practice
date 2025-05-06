@@ -13,5 +13,8 @@ public class UserDto {
 	private String user_name ;
 	private String user_password ;
 	private Date user_created ;
-
+	private String user_gender;
+	private String user_email;
+	private int user_age;
+	
 }
